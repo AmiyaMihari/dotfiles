@@ -27,6 +27,34 @@ stow hypr waybar wofi wlogout
 - `wofi/` — launcher de apps
 - `wlogout/` — menu de apagado/logout
 
+## guardar y actualizar cambios
+
+Como todo en `~/.config/{hypr,waybar,wofi,wlogout}` son symlinks hacia esta carpeta,
+editar cualquiera de los dos lados es lo mismo. El flujo normal para guardar cambios:
+
+```bash
+cd ~/dotfiles
+git add -A
+git commit -m "describe que cambiaste"
+git push
+```
+
+Si agregas un paquete nuevo (otra carpeta con su propio `.config/algo`), solo falta
+symlinkearlo una vez con stow:
+
+```bash
+cd ~/dotfiles
+stow nombre-del-paquete
+```
+
+Para traer cambios hechos desde otra maquina (o si editaste algo directo en GitHub):
+
+```bash
+cd ~/dotfiles
+git pull
+stow -R hypr waybar wofi wlogout   # re-verifica los symlinks, no hace nada si ya estaban bien
+```
+
 ## notas
 
 - El fix de KWallet vive en `hypr/.config/hypr/conf/env.lua` y `conf/startup.lua`
