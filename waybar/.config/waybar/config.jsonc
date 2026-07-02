@@ -2,135 +2,86 @@
   "layer": "top",
   "position": "top",
   "margin-top": 0,
-  "modules-left": ["clock", "hyprland/workspaces", "tray"],
-  "modules-center": ["hyprland/window"],
-  "modules-right": [
-    "custom/updates",
-    "temperature",
-    "memory",
-    "cpu",
-    "pulseaudio",
-    "battery",
-    "custom/nightmode",
-    "custom/bluetooth",
-    "network",
-    "custom/powermenu"
-  ],
-  "tray": {
-    "icon-size": 16,
-    "spacing": 8
+  "modules-left": ["custom/power", "hyprland/workspaces"],
+  "modules-center": [],
+  "modules-right": ["tray", "bluetooth", "network", "battery", "pulseaudio", "clock"],
+
+  "custom/power": {
+    "format": "⭘ ",
+    "tooltip": false,
+    "on-click": "wlogout -b 5"
   },
-  "clock": {
-    // 24 hour
-    // "format": " {:%H:%M} ",
-    // 12 hour
-    "format": " 󰸗 {:%I:%M %p} ",
-    "interval": 60,
-    "tooltip": true,
-    "tooltip-format": "{:%A, %d %B}"
-  },
+
   "hyprland/workspaces": {
-    "format": "{icon}",
-    "separate-outputs": false,
-    "active-only": false,
-    // turn on true to show same all workspaces on each monitor
-    "all-outputs": false,
-    "sort-by": "number",
-    "format-icons": {
-      // 1-10
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      // 11-20
-      "11": "1",
-      "12": "2",
-      "13": "3",
-      "14": "4",
-      "15": "5",
-      "16": "6",
-      "17": "7",
-      "18": "8",
-      "19": "9",
-      "20": "10",
-      // 21-30
-      "21": "1",
-      "22": "2",
-      "23": "3",
-      "24": "4",
-      "25": "5",
-      "26": "6",
-      "27": "7",
-      "28": "8",
-      "29": "9",
-      "30": "10"
-    }
+    "disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}",
+    "cursor": true
   },
-  "hyprland/window": {
-    "format": "{}"
+
+  "tray": {
+    "icon-size": 20,
+    "spacing": 10,
+    "cursor": true
   },
-  "custom/updates": {
-    "exec": "bash -lc 'r=$(checkupdates 2>/dev/null | wc -l); a=$(paru -Qua 2>/dev/null | wc -l); [ $((r+a)) -gt 0 ] && printf \"󰏗   \" || printf \"󰏗   \"'",
-    "interval": 600,
-    "tooltip": true,
-    "tooltip-format": "Left click: update (paru -Syyu --noconfirm)",
-    "on-click": "konsole -e bash -lc 'paru -Syyu --noconfirm'"
+
+  "bluetooth": {
+    "format": " 󰂯 ",
+    "format-disabled": " 󰂲 ",
+    "format-connected": " 󰂱 ",
+    "on-click": "blueman-manager"
   },
-  "temperature": {
-    "format": "{icon} {temperatureC}°C ",
-    "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
-    "critical-threshold": 80,
-    "format-icons": ["", "", ""]
+
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "  Ethernet",
+    "format-linked": "  Linked (No IP)",
+    "format-disconnected": "  Disconnected",
+    "tooltip": false
   },
-  "memory": {
-    "format": "󰫗 {}% ",
-    "tooltip": true,
-    "tooltip-format": "Memory: {}%"
+
+  "battery": {
+    "states": {
+      "good": 85,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-full": "{icon} {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-alt": "{icon} {capacity}%",
+    "format-icons": [" ", " ", " ", " ", " "],
+    "tooltip-format": "{time}",
+    "cursor": false
   },
-  "cpu": {
-    "format": " {usage}% ",
-    "tooltip": true,
-    "tooltip-format": "CPU: {usage}%"
-  },
+
   "pulseaudio": {
-    "format": " {volume}% ",
-    "scroll-step": 1,
+    "format": "{icon} {volume}%",
+    "format-muted": "  {volume}%",
+    "format-bluetooth": " {volume}%",
+    "format-bluetooth-muted": "  {volume}%",
+    "format-icons": {
+      "headphone": " ",
+      "headset": " ",
+      "default": [" "]
+    },
     "on-click": "pavucontrol"
   },
-  "custom/nightmode": {
-    "exec": "bash -lc '~/.config/waybar/scripts/hyprsunset.sh status'",
-    "return-type": "json",
-    "interval": 2,
-    "tooltip": true,
-    "on-click": "bash -lc '~/.config/waybar/scripts/hyprsunset.sh toggle'"
-  },
-  "custom/bluetooth": {
-    "format": "󰂯 ",
-    "tooltip": true,
-    "tooltip-format": "Bluetooth",
-    "on-click": "blueman-manager",
-    "on-click-right": "blueman-adapters"
-  },
-  "network": {
-    "format": "󰖩 ",
-    "tooltip-format": "{essid}",
-    "interval": 2,
-    "on-click": "konsole -e nmtui"
-  },
-  "battery": {
-    "format": "{capacity}% {icon}",
-    "format-icons": ["", "", "", "", ""]
-  },
-  "custom/powermenu": {
-    "format": " ",
-    "tooltip": true,
-    "tooltip-format": "Power menu",
-    "on-click": "exec wlogout -p layer-shell"
+
+  "clock": {
+    "format": "{:%a %d/%m/%Y ~ %H:%M}",
+    "tooltip-format": "<span size='15000'><tt>{calendar}</tt></span>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "months": "<span color='#F5C2E7'><b>{}</b></span>",
+        "weekdays": "<span color='#89B4FA'><b>{}</b></span>",
+        "days": "<span color='#CDD6F4'><b>{}</b></span>",
+        "today": "<span color='#F9E2AF'><b>{}</b></span>"
+      }
+    },
+    "on-click": "swaync-client -t -sw"
   }
 }

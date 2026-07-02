@@ -5,6 +5,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("/usr/lib/pam_kwallet_init")
 
   hl.exec_cmd("sh -c 'waybar &'")
+  hl.exec_cmd("sh -c 'swaync &'")
   hl.exec_cmd("awww-daemon")
 
   -- Mismo wallpaper por monitor que ya tienes en KDE
