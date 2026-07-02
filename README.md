@@ -24,8 +24,12 @@ sudo pacman -S --needed stow hyprlock awww wlogout grim slurp ttf-jetbrains-mono
 Paquetes de AUR:
 
 ```bash
-paru -S --needed whitesur-icon-theme
+paru -S --needed candy-icons-git overskride-bin
 ```
+
+`candy-icons` normalmente ya viene bajado por KDE en `~/.local/share/icons/candy-icons`
+(vía "Obtener iconos nuevos" de System Settings) — el paquete AUR es solo para que una
+máquina nueva sin KDE también lo tenga.
 
 Clonar y symlinkear:
 
@@ -39,7 +43,7 @@ Aplicar el tema GTK (una sola vez, queda guardado por gsettings):
 
 ```bash
 gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
-gsettings set org.gnome.desktop.interface icon-theme "WhiteSur-dark"
+gsettings set org.gnome.desktop.interface icon-theme "candy-icons"
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 ```
 
