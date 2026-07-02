@@ -15,7 +15,7 @@ hl.config({
     },
 
     -- Ajustado a mano probando en vivo con hyprctl eval hasta que se sintio bien
-    sensitivity = -0.4,
-    accel_profile = "adaptive",
+    sensitivity = 0.1,
+    accel_profile = "flat",
   },
 })
