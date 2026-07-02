@@ -30,7 +30,7 @@
     "format": " 󰂯 ",
     "format-disabled": " 󰂲 ",
     "format-connected": " 󰂱 ",
-    "on-click": "blueman-manager"
+    "on-click": "overskride"
   },
 
   "network": {
