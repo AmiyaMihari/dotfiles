@@ -56,6 +56,21 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
+-- "Espejo": intercambia todo lo que hay en un monitor con el otro
+-- (conserva el acomodo interno de cada workspace, ej. wasap/discord apilados)
+hl.bind(mainMod .. " + X", hl.dsp.workspace.swap_monitors({ monitor1 = "DP-4", monitor2 = "HDMI-A-2" }))
+
+-- Layout "master" (solo aplica en workspaces que lo tengan, ej. workspace 2):
+-- Manda la master al lado contrario (derecha <-> izquierda) sin perder el
+-- acomodo de las apiladas.
+hl.bind(mainMod .. " + G", hl.dsp.layout("orientationcycle left right"))
+-- Convierte la ventana enfocada en la "master" (la grande, anclada al lado
+-- fijado por master.orientation). El resto se apila del otro lado solo.
+hl.bind(mainMod .. " + CTRL + G", hl.dsp.layout("swapwithmaster"))
+-- Reordena las ventanas apiladas (las que NO son master) sin tocarla a ella,
+-- ej. si wasap y discord quedaron al reves de como los quieres.
+hl.bind(mainMod .. " + SHIFT + G", hl.dsp.window.move({ direction = "down" }))
+
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })

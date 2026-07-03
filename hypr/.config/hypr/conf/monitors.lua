@@ -7,4 +7,14 @@ hl.monitor({ output = "HDMI-A-2", mode = "1920x1080@60", position = "1920x0", sc
 
 -- Workspace 1 en DP-4 (izquierda, principal) y 2 en HDMI-A-2 (derecha).
 hl.workspace_rule({ workspace = "1", monitor = "DP-4", default = true })
-hl.workspace_rule({ workspace = "2", monitor = "HDMI-A-2", default = true })
+
+-- Workspace 2 usa layout "master" en vez de dwindle: la ventana "master"
+-- (SUPER + G) queda anclada a la derecha ocupando toda la altura, y el
+-- resto se apila automaticamente a la izquierda (wasap arriba, discord abajo).
+hl.workspace_rule({
+  workspace = "2",
+  monitor = "HDMI-A-2",
+  default = true,
+  layout = "master",
+  layout_opts = { orientation = "right" },
+})
