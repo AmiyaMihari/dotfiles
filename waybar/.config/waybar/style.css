@@ -54,10 +54,20 @@ tooltip {
 #network,
 #battery,
 #pulseaudio,
-#clock {
+#clock,
+#window {
     color: @foreground;
     margin: 1px 0;
     padding: 0 10px;
+}
+
+#window {
+    color: @pink;
+}
+
+/* Cuando no hay ventana activa, atenúa el placeholder */
+window#waybar.empty #window {
+    color: alpha(@foreground, 0.4);
 }
 
 #custom-power:hover,

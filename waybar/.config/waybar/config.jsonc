@@ -3,8 +3,17 @@
     "position": "top",
     "margin-top": 0,
     "modules-left": ["custom/power", "hyprland/workspaces"],
-    // "modules-center": [],
+    "modules-center": ["hyprland/window"],
     "modules-right": ["tray", "bluetooth", "network", "battery", "pulseaudio", "clock"],
+
+    "hyprland/window": {
+        "format": "{title}",
+        "max-length": 60,
+        "separate-outputs": true,
+        "rewrite": {
+            "": "  ~  ",
+        },
+    },
 
     "custom/power": {
         "format" : "⭘ ",
