@@ -27,7 +27,13 @@ WALLET="kdewallet"
 # 1) Propaga el entorno de la sesion a dbus y systemd. Incluimos
 #    PAM_KWALLET5_LOGIN para que el kwalletd6 activado por dbus herede el socket
 #    de un solo uso que dejo pam_kwallet y se auto-desbloquee sin dialogo.
-VARS="DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR"
+# Incluye KDE_SESSION_VERSION/KDE_FULL_SESSION: son CLAVE para que Chromium/Electron
+# elija el backend kwallet6 (/modules/kwalletd6). Sin ellas en el entorno de
+# activacion, un VS Code/Chrome lanzado por dbus/systemd (portal, "abrir con" de
+# Dolphin) asume KDE4 y falla el keyring aunque el wallet este abierto. XDG_MENU_PREFIX
+# va tambien para que apps KDE activadas por esa via encuentren el menu (ver
+# docs/dolphin-open-with-empty.md).
+VARS="DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR KDE_SESSION_VERSION KDE_FULL_SESSION XDG_MENU_PREFIX"
 [ -n "${PAM_KWALLET5_LOGIN:-}" ] && VARS="$VARS PAM_KWALLET5_LOGIN"
 dbus-update-activation-environment --systemd $VARS 2>/dev/null
 systemctl --user import-environment $VARS 2>/dev/null

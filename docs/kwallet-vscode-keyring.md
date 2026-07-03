@@ -78,13 +78,24 @@ hl.env("KDE_FULL_SESSION", "true")
 Con esto Chromium elige el backend **kwallet6** y habla a `/modules/kwalletd6`.
 Arregla el problema principal.
 
+> **Gotcha (la causa más común de "no queda"):** las variables `hl.env` de `env.lua`
+> solo se aplican al **arrancar** la sesión de Hyprland. Si editas `env.lua` y sigues
+> en la misma sesión, los apps ya abiertos (y los que lances) **conservan el entorno
+> viejo** — VS Code seguirá sin `KDE_SESSION_VERSION` y fallando. `hyprctl reload`
+> re-exporta las vars a los apps que lances **después** del reload, pero VS Code
+> **ya abierto no las recibe**: hay que **cerrarlo por completo y reabrirlo** (o
+> reloguear). Verifica el entorno real de un proceso con
+> `tr '\0' '\n' < /proc/$(pgrep -x waybar|head -1)/environ | grep KDE_SESSION_VERSION`.
+
 ### `hypr/.config/hypr/scripts/kwallet-init.sh` (llamado desde `conf/startup.lua`)
 
 Al iniciar Hyprland:
 
-1. Propaga el entorno a dbus/systemd, **incluido `PAM_KWALLET5_LOGIN`**, para que
+1. Propaga el entorno a dbus/systemd, **incluido `PAM_KWALLET5_LOGIN`** (para que
    `kwalletd6` se auto-desbloquee leyendo el socket de un solo uso que dejó
-   `pam_kwallet` en el login (sin diálogo de contraseña).
+   `pam_kwallet` en el login, sin diálogo) y **`KDE_SESSION_VERSION`/`KDE_FULL_SESSION`**
+   (para que un VS Code/Chrome lanzado por activación dbus/systemd —portal, "abrir con"
+   de Dolphin— también elija el backend kwallet6, no solo los que lanza Hyprland).
 2. **Espera a que Hyprland tenga outputs** antes de arrancar `kwalletd6` → evita
    el crash + backoff que causaba el retraso de 90 s.
 3. Fuerza el arranque de `kwalletd6` y **espera a que `kdewallet` quede abierto**
