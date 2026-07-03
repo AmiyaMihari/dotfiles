@@ -13,3 +13,11 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XDG_CURRENT_DESKTOP", "KDE")
 hl.env("XDG_SESSION_DESKTOP", "KDE")
 hl.env("XDG_SESSION_TYPE", "wayland")
+
+-- CLAVE para VS Code/Chrome: sin KDE_SESSION_VERSION, Chromium asume "KDE4" y le
+-- habla al object path viejo /modules/kwalletd (que kwalletd6 NO implementa) =>
+-- "No such object path" => "OS keyring not available", aunque el wallet este
+-- abierto. Con =6 elige el backend kwallet6 correcto (/modules/kwalletd6). En
+-- Plasma real estas dos ya vienen puestas; aqui hay que ponerlas a mano.
+hl.env("KDE_SESSION_VERSION", "6")
+hl.env("KDE_FULL_SESSION", "true")

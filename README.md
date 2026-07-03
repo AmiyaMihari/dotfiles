@@ -89,7 +89,9 @@ stow -R hypr waybar swaync colors cava wofi wlogout   # re-verifica symlinks, no
 
 ## Notas
 
-- El fix de KWallet vive en `hypr/.config/hypr/conf/env.lua` y `conf/startup.lua`
+- El fix de KWallet vive en `hypr/.config/hypr/conf/env.lua`, `conf/startup.lua` y
+  `scripts/kwallet-init.sh`. El porqué (VS Code/Chrome perdían la sesión con "OS keyring
+  is not available") está documentado a detalle en [`docs/kwallet-vscode-keyring.md`](docs/kwallet-vscode-keyring.md)
 - Los monitores están hardcodeados a mis dos pantallas (`DP-4` principal, `HDMI-A-2`
   secundaria) en `hypr/.config/hypr/conf/monitors.lua` — si cambias de hardware, edita ese
   archivo (puedes ver los nombres reales con `kscreen-doctor -o` desde KDE o

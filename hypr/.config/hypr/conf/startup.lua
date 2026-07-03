@@ -1,16 +1,17 @@
 hl.on("hyprland.start", function()
-  -- Compatibilidad KDE <-> Hyprland: propaga el entorno a dbus y desbloquea
-  -- KWallet para que Chrome/VS Code/etc. no pierdan sesiones al cambiar de DE.
-  hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-  hl.exec_cmd("/usr/lib/pam_kwallet_init")
-  -- kwalletd6 normalmente se activa "perezosamente" (recien cuando algo lo
-  -- pide via dbus), lo que tarda ~15-20s tras el login. Si Chrome/VS Code
-  -- lo piden antes de eso, fallan una vez y se quedan pensando que no hay
-  -- keyring (no reintentan). Forzamos el arranque aqui para que ya este
-  -- listo desde el inicio de la sesion.
-  hl.exec_cmd(
-    "busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus StartServiceByName su org.kde.kwalletd6 0"
-  )
+  -- Compatibilidad KDE <-> Hyprland: arranca kwalletd6 temprano y desbloqueado
+  -- para que Chrome/VS Code/etc. no pierdan sesiones al cambiar de DE.
+  --
+  -- Toda la logica vive en scripts/kwallet-init.sh (evita comillas anidadas y
+  -- espera a que el wallet abra). Resumen del bug que arregla:
+  --   * kwalletd6 se activaba "lazy" ~90s tarde: su 1er arranque por dbus
+  --     crasheaba ("no outputs") y systemd aplicaba backoff. VS Code, abierto en
+  --     esa ventana, veia "no keyring" y cerraba sesion.
+  --   * pam_kwallet_init NO sirve aqui: pam_kwallet5 lanza kwalletd5, que no esta
+  --     instalado (solo kwalletd6).
+  -- El script espera outputs, propaga PAM_KWALLET5_LOGIN, fuerza el arranque y
+  -- espera a que kdewallet quede abierto.
+  hl.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/kwallet-init.sh")
 
   hl.exec_cmd("sh -c 'waybar &'")
   hl.exec_cmd("sh -c 'swaync &'")
