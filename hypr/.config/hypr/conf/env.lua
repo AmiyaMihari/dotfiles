@@ -7,6 +7,10 @@ hl.env("GBM_BACKEND", "nvidia-drm")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
+-- Chrome como navegador. El default de xdg ya es google-chrome.desktop (clicks en
+-- links, apps GUI); esto cubre ademas las herramientas de terminal que leen $BROWSER.
+hl.env("BROWSER", "google-chrome-stable")
+
 -- Compatibilidad KDE <-> Hyprland: fuerza a que apps (Chrome, VS Code, etc.)
 -- sigan viendo un "escritorio KDE" y usando KWallet para no perder logins/cookies
 -- al cambiar de sesion.
