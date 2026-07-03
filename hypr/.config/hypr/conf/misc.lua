@@ -2,6 +2,9 @@ hl.config({
   misc = {
     -- See https://wiki.hyprland.org/Configuring/Variables/ for more
     force_default_wallpaper = -1,
+    -- Silencia el aviso "XDG_CURRENT_DESKTOP managed externally": lo forzamos
+    -- a "KDE" a propósito en env.lua (KWallet/Chrome), así que el aviso es esperado.
+    disable_xdg_env_checks = true,
   },
 })
 
