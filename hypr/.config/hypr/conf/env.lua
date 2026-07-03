@@ -18,6 +18,14 @@ hl.env("XDG_CURRENT_DESKTOP", "KDE")
 hl.env("XDG_SESSION_DESKTOP", "KDE")
 hl.env("XDG_SESSION_TYPE", "wayland")
 
+-- CLAVE para "Abrir con" en Dolphin (y cualquier menu de apps de KDE): kbuildsycoca
+-- indexa las apps leyendo el menu XDG "<prefijo>applications.menu". En este sistema
+-- solo existe /etc/xdg/menus/plasma-applications.menu (no el generico
+-- applications.menu). Sin XDG_MENU_PREFIX, KDE busca el generico, no lo encuentra e
+-- indexa 0 apps => el dialogo "Choose an application" sale VACIO para todo tipo de
+-- archivo. En Plasma real esta var ya viene puesta a "plasma-"; aqui hay que ponerla.
+hl.env("XDG_MENU_PREFIX", "plasma-")
+
 -- CLAVE para VS Code/Chrome: sin KDE_SESSION_VERSION, Chromium asume "KDE4" y le
 -- habla al object path viejo /modules/kwalletd (que kwalletd6 NO implementa) =>
 -- "No such object path" => "OS keyring not available", aunque el wallet este

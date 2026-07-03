@@ -92,6 +92,10 @@ stow -R hypr waybar swaync colors cava wofi wlogout   # re-verifica symlinks, no
 - El fix de KWallet vive en `hypr/.config/hypr/conf/env.lua`, `conf/startup.lua` y
   `scripts/kwallet-init.sh`. El porqué (VS Code/Chrome perdían la sesión con "OS keyring
   is not available") está documentado a detalle en [`docs/kwallet-vscode-keyring.md`](docs/kwallet-vscode-keyring.md)
+- El `XDG_MENU_PREFIX=plasma-` en `hypr/.config/hypr/conf/env.lua` es lo que hace que
+  el diálogo "Abrir con" de Dolphin (y cualquier menú de apps de KDE) liste las
+  aplicaciones. Sin él, `kbuildsycoca` no encuentra el menú y el diálogo sale vacío para
+  todo tipo de archivo. Detalle en [`docs/dolphin-open-with-empty.md`](docs/dolphin-open-with-empty.md)
 - Los monitores están hardcodeados a mis dos pantallas (`DP-4` principal, `HDMI-A-2`
   secundaria) en `hypr/.config/hypr/conf/monitors.lua` — si cambias de hardware, edita ese
   archivo (puedes ver los nombres reales con `kscreen-doctor -o` desde KDE o
