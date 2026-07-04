@@ -27,11 +27,19 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
--- Move focus with mainMod + hjkl 
+-- Move focus with mainMod + hjkl
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
+
+-- Move window with mainMod + CTRL + arrow keys
+-- (Nota: NO se usan SUPER + SHIFT + hjkl a proposito; SUPER + SHIFT + L ya es
+-- hyprlock y se prefiere mover ventanas solo con las flechas.)
+hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.move({ direction = "left" }))
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.move({ direction = "down" }))
 
 -- screenshot keybind (todos los monitores; antes tenia "-o DP-1" hardcodeado
 -- de otro PC y le faltaba --type image/png a wl-copy, por eso pegaba basura)
