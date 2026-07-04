@@ -4,8 +4,14 @@ hl.env("QT_QPA_PLATFORMTHEME", "kde6") -- ya tienes plasma-integration instalado
 hl.env("WLR_DRM_NO_ATOMIC", "1") -- some nvidia fix
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("GBM_BACKEND", "nvidia-drm")
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
+-- Tema de cursor EXPLICITO (mismo que KDE: mint-fantome). Antes no estaba
+-- declarado y el cursor solo cargaba "de chiripa" via ~/.icons/default ->
+-- Inherits=mint-fantome; cualquier contexto que no cayera en ese fallback
+-- (p.ej. el greeter SDDM) mostraba el cursor negro X11 crudo que se quedaba
+-- pasmado en pantalla. Con el tema fijo eso ya no pasa.
+hl.env("XCURSOR_THEME", "mint-fantome")
+hl.env("XCURSOR_SIZE", "48")   -- igual que KDE (cursorSize=48)
+hl.env("HYPRCURSOR_SIZE", "48")
 
 -- Chrome como navegador. El default de xdg ya es google-chrome.desktop (clicks en
 -- links, apps GUI); esto cubre ademas las herramientas de terminal que leen $BROWSER.
